@@ -30,6 +30,7 @@ $trainings = $client->getApplicationTrainingService($application)->fetchAll();
 $training = $trainings->getItem(0);
 
 // Start the training
-$state = $client->getTrainingSessionService()->startTraining($training->getId(), 'Walter Tamboer');
+$activeTrainingId = $client->getTrainingSessionService()->startTraining($training->getId(), 'Walter Tamboer');
 
-var_dump($state);
+// The id that is used to retrieve the state and submit a state.
+var_dump($activeTrainingId);

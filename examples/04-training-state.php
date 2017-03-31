@@ -17,10 +17,11 @@ $client = \Evolve123\ApiClient\ClientFactory::create([
     ],
 ]);
 
-$trainingId = 'd90d7f40-4b19-45bb-a2e3-50e047479c21';
+// The id that you received after starting a training.
+$activeTrainingId = 'd90d7f40-4b19-45bb-a2e3-50e047479c21';
 
 // Retrieve the current state:
-$state = $client->getTrainingSessionService()->getCurrentState($trainingId);
+$state = $client->getTrainingSessionService()->getCurrentState($activeTrainingId);
 
 var_dump($state);
 
