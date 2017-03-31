@@ -12,6 +12,7 @@ namespace Evolve123\ApiClient\Service;
 use Evolve123\ApiClient\Exception\InvalidSubmission;
 use Evolve123\ApiClient\HttpAdapter\Exception\BadRequest;
 use Evolve123\ApiClient\Response\ActiveTrainingState;
+use Evolve123\ApiClient\State\Answer;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -58,18 +59,29 @@ final class TrainingSession extends AbstractService
         return ActiveTrainingState::fromJson($json);
     }
 
-    /**
-     * @param string $trainingId
-     * @param string $stateId
-     * @return ActiveTrainingState
-     */
+	/**
+	 * @param string $trainingId
+	 * @param string $stateId
+	 * @param array $answers
+	 * @return ActiveTrainingState
+	 */
     public function submitState($trainingId, $stateId, array $answers = [])
     {
         $url = sprintf('/training/active/%s/submit', $trainingId);
 
+	    $answersToSend = [];
+
+	    /** @var Answer $answer */
+	    foreach ($answers as $answer) {
+		    $answersToSend[] = [
+		    	'id' => $answer->getId(),
+			    'value' => $answer->getValue(),
+		    ];
+	    }
+
         $data = [
             'id' => $stateId,
-            'answer' => $answers,
+            'answer' => $answersToSend,
         ];
 
         try {

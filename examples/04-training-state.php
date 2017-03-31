@@ -27,7 +27,8 @@ var_dump($state);
 // Submit to the current state
 try {
     $newState = $client->getTrainingSessionService()->submitState($trainingId, $state->getId(), [
-
+    	new \Evolve123\ApiClient\State\Answer('12345'),
+    	new \Evolve123\ApiClient\State\Answer('67890', 'Some value'),
     ]);
 
     var_dump($newState);
